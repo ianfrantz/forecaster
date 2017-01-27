@@ -20,3 +20,11 @@ EOF
 else
 echo "Product table NOT built"
 fi
+
+#Import Data into "product" table.
+echo "Import data into product?"
+read import1
+if [[ $import1 == *[yY]* ]]; then
+
+#Initialize sqlite3 for import and read product.csv
+
