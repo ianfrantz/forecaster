@@ -14,12 +14,16 @@ P1T2 <- filter (producttable, product_name == "Product 1") %>%
 p1t1price <- list(P1T1$price)
 p1t1probability <- list (P1T1$probability)
 
-#Ready variables for sample function
-ssize <- 12
-P1T1Forecast <- c()
+#Define simulator function
 
-for (i in 1:300)
-{
-  simulation <- pmap(list(x = p1t1price, size = ssize, replace = TRUE, prob = p1t1probability), sample)
-  P1T1Forecast <- append(P1T1Forecast, sum(simulation[[1]]))
+simulator <- function(samplesize, price, probability) {
+  output <- c ()
+  for (i in 1:52)
+  {
+    simulation <- pmap(list(x = price, size = samplesize, replace = TRUE, prob = probability), sample)
+    output <- append(output, sum(simulation[[1]]))
+  }
+  output
 }
+
+
