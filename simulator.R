@@ -26,4 +26,5 @@ simulator <- function(samplesize, price, probability) {
   output
 }
 
+#test 2
 
