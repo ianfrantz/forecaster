@@ -3,6 +3,8 @@ library (purrr)
 
 #Create P1T1 dataframe with only "Product 1" and "Tier 1" data
 
+#Need to write a function here
+
 P1T1 <- filter (producttable, product_name == "Product 1") %>% 
   filter (tier_name == "Tier 1")
 
