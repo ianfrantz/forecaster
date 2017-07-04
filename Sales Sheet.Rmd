@@ -1,0 +1,15 @@
+---
+title: "Product Sal"
+author: "Ian Frantz (www.ianfrantz.com)"
+date: "July 3, 2017"
+output: html_document
+---
+
+# Structures look like this: 
+
+```{r, echo=FALSE}
+load (file = "product.table.RData")
+product.table
+```
+
+

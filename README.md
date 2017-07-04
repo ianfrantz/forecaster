@@ -1,12 +1,8 @@
 # Forecaster is a lightweight sampling distribution forecaster
 
-The forecaster as authored by Ian Frantz (ianfrantz.com) is designed to encourage smaller investments into more probabalistic outcomes. It uses a new function called "simulator" which reads it's data from hierarchical lists. 
+The forecaster as authored by Ian Frantz (ianfrantz.com) is designed to encourage smaller investments into more probabalistic outcomes. It reads Excel data into SQLite and into R. There are two new functions I wrote: Simulator and ProductList.  
 
-## The program is for small businesses. 
-# It will simulate tier based product pricing. 
+#If you want to run this program yourself then follow the HowTo. 
 
-# Structures look like this: 
-```{r}
+##Look at the Sales Sheet for a broad overview. 
 
-
-```
