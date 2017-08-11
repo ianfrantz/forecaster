@@ -1,5 +1,4 @@
 #Build connection to SQLite database 
-
 library(RSQLite)
 library(dplyr)
 
@@ -17,12 +16,17 @@ product.table <- dbGetQuery(forecaster.db,
            FROM coreproducts JOIN pricing USING (product_id)
            ORDER BY product_name, tier_name;")
 
+#Save product.table
+save (product.table, file = "product.table.RData")
+
 #Close database connection
 dbDisconnect(forecaster.db)
 
 #Build a "Product 1" and "Tier 1" list
+
 p1t1 <- filter (product.table, product_name == "Product 1") %>% 
   filter (tier_name == "Tier 1") %>%
-  list()
+  as.list(product.table$product_name)
+
 
 

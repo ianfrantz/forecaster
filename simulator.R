@@ -19,15 +19,19 @@ Simulator <- function(samplesize, price, probability) {
 ProductList <- function (prodtier, product) {
   pt.results <- c()
   for ( i in prodtier) {
-    pt.results <- c(i, prodtier[[product]])
+    pt.results <- c(i, prodtier[[product]]) %>%
+      as.list(product$product_name)
   }
   return(pt.results)  
 }
 
 #Creating a list using the ProductList function
-product1 <- ProductList(p1t1, "product_name")
+product1 <- ProductList(p1t1, "price")
 
-#Put plots in:
+#Create results list
+
+
+#Plot results:
 plots <- pmap(p1t1, countries,
               ~ ggplot(.x, aes(year, lifeExp)) +
                 geom_line() +
