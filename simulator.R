@@ -4,11 +4,11 @@ library (purrr)
 #Default simulation is set to sales per week
 
 #The "Simulator" function is defined here with three variables.
-Simulator <- function(samplesize, price, probability) {
+Simulator <- function(weeks, price, samplesize, probability) {
   output <- c ()
-  for (i in 1:52)
+  for (i in 1:weeks)
   {
-    simulation <- pmap(list(size = samplesize, x = price, prob = probability, replace = TRUE ), sample)
+    simulation <- pmap(list(x = price, size = samplesize, replace = TRUE,  prob = probability), sample)
     output <- append(output, sum(simulation[[1]]))
   }
   return(output)
