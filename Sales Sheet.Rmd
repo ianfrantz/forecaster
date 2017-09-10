@@ -12,4 +12,6 @@ load (file = "product.table.RData")
 product.table
 ```
 
+# Reducing the structure to Product 1 - Tier 1
+
 
