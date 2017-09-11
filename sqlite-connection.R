@@ -27,6 +27,3 @@ dbDisconnect(forecaster.db)
 p1t1 <- filter (product.table, product_name == "Product 1") %>% 
   filter (tier_name == "Tier 1") %>%
   as.list()
-
-
-

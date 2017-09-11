@@ -31,11 +31,3 @@ ProductList <- function (prodtier, product) {
 product1 <- ProductList(p1t1, "price")
 
 #Create results list
-
-
-#Plot results:
-plots <- pmap(p1t1, countries,
-              ~ ggplot(.x, aes(year, lifeExp)) +
-                geom_line() +
-                labs(title = .y))
-plots[[1]]
