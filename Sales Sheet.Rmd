@@ -1,5 +1,5 @@
 ---
-title: "Product Sal"
+title: "Product Sales Sheet"
 author: "Ian Frantz (www.ianfrantz.com)"
 date: "July 3, 2017"
 output: html_document
