@@ -8,6 +8,12 @@ output: html_document
 # Set-up Excel - ProductHierarchy.xlsx
 
 ProductHierarchy contains three tabs:
+
 1. Raw Data
+  + Contains the business hierarchy
+
 2. coreproducts
+  + Simplified Products and Services
+
 3. pricing
+  + Price tiers and probability

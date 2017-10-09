@@ -12,7 +12,7 @@ The forecaster as authored by Ian Frantz (ianfrantz.com) is designed to encourag
 # If you want to run this program yourself then follow the HowTo. 
 
 * How To
-  + [Set-up Excel]()
+  + [Set-up Excel](https://github.com/ianfrantz/forecaster/tree/master/Documentation/HowTo_-_Excel.html)
   + Configure SQLite
 * SQLite 
   + forecaster.db
