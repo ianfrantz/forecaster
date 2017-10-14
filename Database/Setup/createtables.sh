@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /c/Users/ianfr/Desktop/R_Programs/forecaster 
+cd /c/Users/ianfr/Desktop/R_Programs/forecaster/Database
 
 echo "Build SQLite coreproducts table? (Y/N)"
 
@@ -27,7 +27,7 @@ if [[ $importcore == *[yY]* ]]; then
 #Initialize sqlite3 for import and read coreproducts.csv
 sqlite3 forecaster.db << EOF
 .mode csv
-.import coreproducts.csv coreproducts
+.import ./Setup/coreproducts.csv coreproducts
 EOF
 
 else
@@ -64,7 +64,7 @@ if [[ $importprice == *[yY]* ]]; then
 #Initialize sqlite3 for import and read pricing.csv
 sqlite3 forecaster.db << EOF
 .mode csv
-.import pricing.csv pricing
+.import ./Setup/pricing.csv pricing
 EOF
 
 else
