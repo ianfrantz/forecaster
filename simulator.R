@@ -1,5 +1,7 @@
 library (purrr)
 
+setwd ("C:/Users/ianfr/Desktop/R_Programs/forecaster")
+
 #Define simulator function
 #Default simulation is set to sales per week
 
