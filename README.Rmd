@@ -13,7 +13,7 @@ The forecaster as authored by Ian Frantz (ianfrantz.com) is designed to encourag
 
 * How To
   + [Set-up Excel](https://github.com/ianfrantz/forecaster/blob/master/Documentation/HowTo%20-%20Excel.Rmd)
-  + Configure SQLite
+  + Create SQLite Database and Tables
 * SQLite 
   + forecaster.db
 * R Code
