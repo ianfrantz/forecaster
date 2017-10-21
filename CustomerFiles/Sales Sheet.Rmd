@@ -5,10 +5,10 @@ date: "July 3, 2017"
 output: html_document
 ---
 
-# Structures look like this: 
+# Does your product and pricing structure look like this?
 
 ```{r, echo=FALSE}
-load (file = "product.table.RData")
+load (file = "C:/Users/ianfr/Desktop/R_Programs/forecaster/Data/product.table.RData")
 product.table
 ```
 

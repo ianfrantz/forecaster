@@ -5,7 +5,7 @@ date: "October 9, 2017"
 output: html_document
 ---
 
-# Set-up Excel - ProductHierarchy.xlsx
+# Understand Excel - ProductHierarchy.xlsx
 
 ProductHierarchy contains three tabs:
 
@@ -17,3 +17,29 @@ ProductHierarchy contains three tabs:
 
 3. pricing
   + Price tiers and probability
+  
+# First
+
+Enter your hierarchical data into the Raw Data file.
+
+# Second
+
+Complete the coreproducts worksheet listing the products first and services second.
+
+# Third
+
+Fill out the the pricing worksheet listing again the coreproducts first and services second under the **"coreproduct"** column. 
+
+# Fourth
+
+Save the coreproducts worksheet as 
+>Name: **"coreproducts.csv"** 
+>Type **"CSV (MS-DOS)"**
+>Directory **"\forecaster\Database\Setup"
+
+# Fifth 
+
+Save the pricing worksheet as 
+>Name: **"pricing.csv"** 
+>Type **"CSV (MS-DOS)"**
+>Directory **"\forecaster\Database\Setup"

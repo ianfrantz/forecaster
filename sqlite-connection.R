@@ -17,6 +17,7 @@ product.table <- dbGetQuery(forecaster.db,
 
 #Close database connection
 dbDisconnect(forecaster.db)
+rm (forecaster.db)
 
 #Save product.table
 setwd ("C:/Users/ianfr/Desktop/R_Programs/forecaster/Data")
