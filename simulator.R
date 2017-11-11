@@ -19,17 +19,12 @@ Simulator <- function(weeks, price, samplesize, probability) {
 #Simulating 52 weeks and 1 sale per week.
 Simulator(52, p1t1[4], 1, p1t1[5])
 
-#The "ProductList" function is used to create lists of already filtered "Product X" and "Tier X" data.frames 
-ProductList <- function (prodtier, product) {
-  pt.results <- c()
-  for ( i in prodtier) {
-    pt.results <- c(i, prodtier[[product]]) %>%
-      as.list(product$product_name)
-  }
-  return(pt.results)  
-}
+#The "ProductList" function is used to create lists based on "Product X" and "Tier X" data.frames 
+ProductList <- function(product_name1, tier_name1) {
+  filter (product.table, product_name1 == product_name, 
+          tier_name1 == tier_name) %>% as.list() }
 
-#Creating a list using the ProductList function
-product1 <- ProductList(p1t1, "price")
+#Create results lists using the ProductList function
+p1t1 <- ProductList("Product 1", "Tier 1")
+p1t2 <- ProductList("Product 1", "Tier 2")
 
-#Create results list

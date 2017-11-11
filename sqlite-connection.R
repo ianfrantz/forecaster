@@ -22,9 +22,3 @@ rm (forecaster.db)
 #Save product.table
 setwd ("C:/Users/ianfr/Desktop/R_Programs/forecaster/Data")
 save (product.table, file = "product.table.RData")
-
-#Build a "Product 1" and "Tier 1" list
-#Create this as a function that takes input for name and tier.
-p1t1 <- filter (product.table, product_name == "Product 1") %>% 
-  filter (tier_name == "Tier 1") %>%
-  as.list()
