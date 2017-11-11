@@ -58,10 +58,10 @@ fi
 
 #Import Data into "pricing" table.
 echo "Import data into pricing?"
-read importprice
-if [[ $importprice == *[yY]* ]]; then
+read importpricing
+if [[ $importcore == *[yY]* ]]; then
 
-#Initialize sqlite3 for import and read pricing.csv
+#Initialize sqlite3 for import and read coreproducts.csv
 sqlite3 forecaster.db << EOF
 .mode csv
 .import ./Setup/pricing.csv pricing
@@ -69,5 +69,37 @@ EOF
 
 else
 echo "Pricing data NOT imported"
+fi 
+
+#Create "results" table.
+echo "Create results table?"
+read createresults
+if [[ $createresults == *[yY]* ]]; then
+
+sqlite3 forecaster.db << EOF
+CREATE TABLE results (
+result_id INTEGER NOT NULL PRIMARY KEY,
+simulation_number INTEGER,
+result_sum INTEGER);
+EOF
+
+else
+echo "Results table NOT built"
+fi
+
+#Import "results" data.
+echo "Import data into results?"
+
+read importresults
+if [[ $importresults == *[yY]* ]]; then
+
+#Initialize sqlite3 for import and read results.csv
+sqlite3 forecaster.db << EOF
+.mode csv
+.import ./Setup/results.csv results
+EOF
+
+else
+echo "Results data NOT imported"
 fi
 
