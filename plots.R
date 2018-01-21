@@ -2,7 +2,8 @@
 library(ggplot2)
 #Simulation tial #1 (52 weeks, 1 sale per week)
 y <- Simulator(52, p1t1[4], 1, p1t1[5])
-x <- 1:52
+lx <- length(y)
+x <- 1:lx
 
 #trial1 results for 1st Simulator with proportional barchart
 trial1 <- data.frame(x,y)
@@ -37,6 +38,8 @@ df.m <- melt(data.frame(trial1 = trial1, trial2 = trial2))
 productplot1 <- ggplot(df.m) +
   geom_density(aes(x = value, colour = variable)) + 
   labs(x = NULL)
+
+productplot1
 
 productplot1 <- ggplot(data = c(trial1, trial2)) + 
   geom_point(mapping = aes(x=x, y=y, color = "blue"))

@@ -5,9 +5,16 @@ date: "October 9, 2017"
 output: html_document
 ---
 
-# Forecaster is a lightweight sampling distribution forecaster
+# Forecaster
+### License: MIT
+### Written by: Ian Frantz
 
-The forecaster as authored by Ian Frantz (ianfrantz.com) is designed to encourage smaller investments into more probabalistic outcomes. It reads Excel data into SQLite and then into R for analysis, plotting and report generation. There are two new functions I wrote: Simulator and ProductList.  
+
+# Forecaster is a lightweight sampling distribution forecaster.
+
+
+### Workflow:
+Excel data into SQLite and then into R for analysis, plotting and report generation. There are two new functions I wrote: Simulator and ProductList.  
 
 # If you want to run this program yourself then follow the HowTo. 
 
