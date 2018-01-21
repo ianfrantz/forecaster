@@ -1,11 +1,8 @@
-#Build connection to SQLite database 
-library(RSQLite)
-library(dplyr)
-
-setwd ("C:/Users/ianfr/Desktop/R_Programs/forecaster/Database")
+#Make sure forecaster is set as working directory
+library(RSQLite) #For SQLite
 
 #Connect to SQLite forecaster.db
-forecaster.db <- dbConnect(SQLite(),dbname="forecaster.db")
+forecaster.db <- dbConnect(SQLite(),dbname="./Database/forecaster.db")
 
 #Create hierarchy and producttable data.frames from tables in forecaster.db
 hierarchy <- dbGetQuery(forecaster.db, "SELECT * FROM coreproducts")
@@ -20,5 +17,4 @@ dbDisconnect(forecaster.db)
 rm (forecaster.db)
 
 #Save product.table
-setwd ("C:/Users/ianfr/Desktop/R_Programs/forecaster/Data")
-save (product.table, file = "product.table.RData")
+save (product.table, file = "./Data/product.table.RData")
