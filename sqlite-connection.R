@@ -17,9 +17,4 @@ dbDisconnect(forecaster.db)
 rm (forecaster.db)
 
 #Save product.table
-<<<<<<< HEAD
-setwd ("C:/Users/ianfr/Desktop/R_Programs/forecaster/Data")
-save (product.table, file = "product.table.RData")
-=======
 save (product.table, file = "./Data/product.table.RData")
->>>>>>> Sprint1.4_plotting

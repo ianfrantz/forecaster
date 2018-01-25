@@ -8,7 +8,7 @@ output: html_document
 # Does your product and pricing structure look like this?
 
 ```{r, echo=FALSE}
-load (file = "C:/Users/ianfr/Desktop/R_Programs/forecaster/Data/product.table.RData")
+load (file = "./Data/product.table.RData")
 product.table
 ```
 
