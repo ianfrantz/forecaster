@@ -1,6 +1,5 @@
-library (purrr)
-
-setwd ("C:/Users/ianfr/Desktop/R_Programs/forecaster")
+library (purrr) #For use of `pmap`` in the Simulator function
+library (dplyr) #Needed `filter`` in ProductList function
 
 #-----Functions "Simulator" and "ProductList"------
 
@@ -20,6 +19,7 @@ Simulator <- function(weeks, price, samplesize, probability) {
 ProductList <- function(product_name1, tier_name1) {
   filter (product.table, product_name1 == product_name, 
           tier_name1 == tier_name) %>% as.list() }
+
 
 #-----Creating ProductLists-----
 #Create results lists using the ProductList function

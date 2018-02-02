@@ -2,14 +2,25 @@
 title: "Product Sales Sheet"
 author: "Ian Frantz (www.ianfrantz.com)"
 date: "July 3, 2017"
-output: html_document
+output:
+  html_document:
+    theme: united
+    highlight: tango
+    fig_width: 10
+    fig_height: 6
 ---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE)
+library(ggplot2)
+```
 
-# Does your product and pricing structure look like this?
 
-```{r, echo=FALSE}
-load (file = "./Data/product.table.RData")
-product.table
+# Is your product, service and pricing model hierarchical? 
+
+```{r product.table, echo=FALSE}
+load (file = "../Data/product.table.RData")
+knitr::kable(product.table,
+             caption = "Hierarchical Pricing Model")
 ```
 
 # Reducing the structure to Product 1 - Tier 1
