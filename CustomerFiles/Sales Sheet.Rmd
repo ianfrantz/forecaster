@@ -1,7 +1,7 @@
 ---
 title: "Product Sales Sheet"
 author: "Ian Frantz (www.ianfrantz.com)"
-date: "July 3, 2017"
+date: "Feb 10, 2018"
 output:
   html_document:
     theme: united
@@ -11,11 +11,33 @@ output:
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=FALSE)
+library(dplyr)
+library(purrr)
 library(ggplot2)
 ```
 
+```{r functions, include = FALSE}
+#The "Simulator" function is defined here with four variables. 
+Simulator <- function(weeks, price, samplesize, probability) {
+  output <- c ()
+  for (i in 1:weeks)
+  {
+    simulation <- purrr::pmap(list(x = price, size = samplesize, replace = TRUE,  prob = probability), sample)
+    output <- append(output, sum(simulation$price))
+  }
+  return(output)
+}
 
-# Is your product, service and pricing model hierarchical? 
+
+#The "ProductList" function is used to create lists based on "Product X" and "Tier X" data.frames 
+ProductList <- function(product.table, product_name1, tier_name1) {
+  dplyr::filter (product.table, product_name1 == product_name, 
+          tier_name1 == tier_name) %>% as.list() }
+
+```
+
+
+# What will be the annual sales results for Drift's Product 1 - Tier 1?
 
 ```{r product.table, echo=FALSE}
 load (file = "../Data/product.table.RData")
@@ -23,6 +45,22 @@ knitr::kable(product.table,
              caption = "Hierarchical Pricing Model")
 ```
 
-# Reducing the structure to Product 1 - Tier 1
+# ANSWER: 
+
+```{r visualization, echo=FALSE}
+#Simulation tial #1 (52 weeks, 1 sale per week)
+y <- Simulator(52, p1t1[4], 1, p1t1[5])
+lx <- length(y)
+x <- 1:lx
+
+#trial1 results for 1st Simulator with proportional barchart
+trial1 <- data.frame(x,y)
+
+productplot1 <- ggplot(data = trial1) +
+  geom_bar(aes(x = y, y = ..prop..), fill = "red")
+
+productplot1
+```
+
 
 

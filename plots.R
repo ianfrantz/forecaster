@@ -5,18 +5,18 @@ y <- Simulator(52, p1t1[4], 1, p1t1[5])
 lx <- length(y)
 x <- 1:lx
 
-#trial1 results for 1st Simulator with proportional barchart
+#trial1 results
 trial1 <- data.frame(x,y)
 
-productplot1 <- ggplot(data = trial1) +
-  geom_bar(aes(x = y, y = ..prop..), fill = "red")
+productplot1 <- ggplot(data = trial1) 
 
-productplot1
-
-productplot1 <- ggplot(data = trial1) +
+#--FUTURE--Sum trial1$y and put results into labels
+productplot1 + 
   geom_bar(aes(x = y), fill = "red")
 
-productplot1
+productplot1 + 
+  geom_bar(aes(x = y, y = ..prop..), fill = "red") 
+
 
 #trial #2 (52 weeks, 5 sales per week)
 y <- Simulator(52, p1t1[4], 5, p1t1[5])
@@ -43,5 +43,6 @@ productplot1
 
 productplot1 <- ggplot(data = c(trial1, trial2)) + 
   geom_point(mapping = aes(x=x, y=y, color = "blue"))
+
 
 
