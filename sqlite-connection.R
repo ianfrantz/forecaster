@@ -1,4 +1,4 @@
-#Make sure forecaster is set as working directory
+#-----Make sure forecaster is set as working directory-----
 library(RSQLite) #For SQLite
 
 #Connect to SQLite forecaster.db

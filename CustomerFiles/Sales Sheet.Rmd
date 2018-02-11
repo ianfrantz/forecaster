@@ -1,7 +1,7 @@
 ---
-title: "Product Sales Sheet"
+title: "Forecasting Hierarchical Sales Models"
 author: "Ian Frantz (www.ianfrantz.com)"
-date: "Feb 10, 2018"
+date: "`r format(Sys.time(), '%Y %M, %D')`"
 output:
   html_document:
     theme: united
@@ -38,14 +38,20 @@ ProductList <- function(product.table, product_name1, tier_name1) {
 
 
 # What will be the annual sales results for Drift's Product 1 - Tier 1?
+IF:
+* Trial 1 - For 52 weeks, Drift makes 1 sale per week.
+* Trial 2 - For 1 Quarter, Drift makes 35 sales per week.
 
 ```{r product.table, echo=FALSE}
 load (file = "../Data/product.table.RData")
 knitr::kable(product.table,
              caption = "Hierarchical Pricing Model")
 ```
+```{r create.data, echo=FALSE}
+p1t1 <- ProductList(product.table, "Product 1", "Tier 1")
+```
 
-# ANSWER: 
+
 
 ```{r visualization, echo=FALSE}
 #Simulation tial #1 (52 weeks, 1 sale per week)
@@ -57,10 +63,15 @@ x <- 1:lx
 trial1 <- data.frame(x,y)
 
 productplot1 <- ggplot(data = trial1) +
-  geom_bar(aes(x = y, y = ..prop..), fill = "red")
+  geom_bar(aes(x = y, y = ..prop..), fill = "green")
 
 productplot1
 ```
-
+# ANSWER: 
+* For Trial 1 - 
+* For Trial 2 -
+```{r, echo = FALSE} 
+sum(trial1$y)
+```
 
 

@@ -12,10 +12,10 @@ productplot1 <- ggplot(data = trial1)
 
 #--FUTURE--Sum trial1$y and put results into labels
 productplot1 + 
-  geom_bar(aes(x = y), fill = "red")
+  geom_bar(aes(x = y), fill = "green")
 
 productplot1 + 
-  geom_bar(aes(x = y, y = ..prop..), fill = "red") 
+  geom_bar(aes(x = y, y = ..prop..), fill = "green") 
 
 
 #trial #2 (52 weeks, 5 sales per week)
@@ -26,8 +26,8 @@ trial2 <- data.frame(x,y)
 #Think about how to color the offer numbers into this view. I think it will be more useful with showing the proportionality.
 
 trialresults <-ggplot() + 
-  geom_bar(data=trial1, aes(y), fill="red") + 
-  geom_bar(data=trial2, aes(y), fill="blue")
+  geom_bar(data=trial1, aes(y), fill="green") + 
+  geom_bar(data=trial2, aes(y), fill="red")
 
 trialresults
 
@@ -42,7 +42,7 @@ productplot1 <- ggplot(df.m) +
 productplot1
 
 productplot1 <- ggplot(data = c(trial1, trial2)) + 
-  geom_point(mapping = aes(x=x, y=y, color = "blue"))
+  geom_point(mapping = aes(x=x, y=y, color = "red"))
 
 
 
