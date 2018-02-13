@@ -7,7 +7,7 @@ x <- 1:lx
 
 #trial1 results
 trial1 <- data.frame(x,y)
-1
+
 productplot1 <- ggplot(data = trial1) 
 
 #--FUTURE--Sum trial1$y and put results into labels
