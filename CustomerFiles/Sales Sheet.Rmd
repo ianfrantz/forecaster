@@ -37,7 +37,7 @@ ProductList <- function(product.table, product_name1, tier_name1) {
 ```
 
 
-# What will be the annual sales results for Drift's Product 1 - Tier 1?
+# What might be the sales results for Drift's Product 1 - Tier 1?
 
 IF:
 
@@ -50,13 +50,12 @@ load (file = "../Data/product.table.RData")
 knitr::kable(product.table,
              caption = "Hierarchical Sales Model")
 ```
+
 ```{r create.data, echo=FALSE}
 p1t1 <- ProductList(product.table, "Product 1", "Tier 1")
 ```
 
-
-
-```{r visualization, echo=FALSE}
+```{r trial1-visualization, echo=FALSE}
 #Simulation tial #1 (52 weeks, 1 sale per week)
 y <- Simulator(52, p1t1[4], 1, p1t1[5])
 lx <- length(y)
@@ -72,13 +71,35 @@ productplot1 +
 
 ```
 
+```{r, trial2-visualization, echo=FALSE}
+y <- Simulator(13, p1t1[4], 35, p1t1[5])
+lx <- length(y)
+x <- 1:lx
+
+trial2 <- data.frame(x,y)
+
+productplot2 <- ggplot(data = trial2) 
+productplot2 + 
+  geom_bar(aes(x = y), fill = "red")
+```
+
+
 ***
 
 # ANSWER: 
 
 * For Trial 1 - $`r sum(trial1$y)`
 
-* For Trial 2 -
+* For Trial 2 - $`r sum(trial2$y)`
 
+***
+## Bonus: What do the combined results of tial1 and trial2 look like?
 
+```{r, combinetrial1and2, echo=FALSE}
+combineresults <-ggplot() + 
+  geom_bar(data=trial1, aes(y), fill="green") + 
+  geom_bar(data=trial2, aes(y), fill="red")
 
+combineresults
+
+```
