@@ -4,10 +4,10 @@ author: "Ian Frantz [www.ianfrantz.com](www.ianfrantz.com)"
 date: "`r format(Sys.time(), '%Y-%m-%d')`"
 output:
   html_document:
-    theme: united
-    highlight: tango
-    fig_width: 10
     fig_height: 6
+    fig_width: 10
+    highlight: tango
+    theme: united
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=FALSE)

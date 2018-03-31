@@ -1,0 +1,6 @@
+---
+title: "HowTo - SQLite"
+author: "Ian Frantz (www.ianfrantz.com)"
+date: "March 11, 2018"
+output: html_document
+---

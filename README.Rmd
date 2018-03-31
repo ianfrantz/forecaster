@@ -10,7 +10,7 @@ output: html_document
 ### Written by: Ian Frantz
 
 
-# Forecaster is a lightweight sampling distribution forecaster.
+# Forecaster is a lightweight sampling distribution tool for hierarchical sales analysis.
 
 
 ### Workflow:
