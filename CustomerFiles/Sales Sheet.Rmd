@@ -3,11 +3,15 @@ title: "Forecasting Hierarchical Sales Models"
 author: "Ian Frantz [www.ianfrantz.com](www.ianfrantz.com)"
 date: "`r format(Sys.time(), '%Y-%m-%d')`"
 output:
-  html_document:
+    word_document:
+      reference_docx: "Sales_Sheet_syles-ref-01.docx"
+#For printing plots
     fig_height: 6
     fig_width: 10
-    highlight: tango
-    theme: united
+#For data.frames and syntax highlighting
+    print_df: kable
+    highlight: "tango"
+    theme: "united"
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=FALSE)
