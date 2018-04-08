@@ -20,7 +20,7 @@ Excel data into SQLite and then into R for analysis, plotting and report generat
 
 * How To
   + [Set-up Excel](https://github.com/ianfrantz/forecaster/blob/master/Documentation/HowTo%20-%20Excel.Rmd)
-  + Create SQLite Database and Tables
+  + [Create SQLite Database and Tables] ()
 * SQLite 
   + forecaster.db
 * R Code
