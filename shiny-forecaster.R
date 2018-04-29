@@ -7,7 +7,6 @@ load("./Data/product.table.RData")
 
 # Define UI for forecaster
 ui <- fluidPage(
-  
   titlePanel("Forecasting Hierarchical Sales"),
   # Sidebar layout with a input and output definitions
   sidebarLayout(
@@ -18,25 +17,23 @@ ui <- fluidPage(
       # Select variable for y-axis
       selectInput(inputId = "y", 
                   label = "Y-axis:",
-                  choices = c("imdb_rating", "imdb_num_votes", "critics_score", "audience_score", "runtime"), 
-                  selected = "audience_score"),
+                  choices = c(""), 
+                  selected = ""),
       
       # Select variable for x-axis
       selectInput(inputId = "x", 
                   label = "X-axis:",
-                  choices = c("imdb_rating", "imdb_num_votes", "critics_score", "audience_score", "runtime"), 
-                  selected = "critics_score"),
+                  choices = c(""), 
+                  selected = ""),
       
-      # Set alpha level
-      sliderInput(inputId = "alpha", 
-                  label = "Alpha:", 
-                  min = 0, max = 1, 
-                  value = 0.5)
+      # Download button
+      downloadButton("downloadoutput1", 'Download Data')
     ),
     
     # Outputs
     mainPanel(
-      plotOutput(outputId = "scatterplot")
+      plotOutput(outputId = "Histogram"),
+      plotOutput(outputId = "Density", height = 200)
     )
   )
 )
@@ -45,10 +42,22 @@ ui <- fluidPage(
 server <- function(input, output) {
   
   # Create scatterplot object the plotOutput function is expecting
-  output$scatterplot <- renderPlot({
+  output$Historgram <- renderPlot({
     ggplot(data = product.table, aes_string(x = input$x, y = input$y)) +
       geom_point(alpha = input$alpha)
   })
+  
+  output$Density <- renderPlot({
+    ggplot(data = product.table, aes_string(x = input$x)) +
+      geom_density()
+  })
+  
+  output$downloadoutput1 <- downloadHandler(
+    filename = function() {
+      paste("File Name", Sys.Date(),".csv", sep='') },
+      content = function(file) {write.csv(Output1, file, row.names = TRUE)
+  })
+  
 }
 
 # Create the Shiny app object
