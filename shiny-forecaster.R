@@ -11,7 +11,7 @@ ui <- fluidPage(
   # Sidebar layout with a input and output definitions
   sidebarLayout(
     
-    # Inputs
+#INPUT
     sidebarPanel(
       
       # Select variable for y-axis
@@ -30,14 +30,15 @@ ui <- fluidPage(
       downloadButton("downloadoutput1", 'Download Data')
     ),
     
-    # Outputs
+#OUTPUT
     mainPanel(
-      plotOutput(outputId = "Histogram"),
+      plotOutput(outputId = "Histogram", height = 500),
       plotOutput(outputId = "Density", height = 200)
     )
   )
 )
 
+#SERVER
 # Define server function required to create the scatterplot
 server <- function(input, output) {
   
