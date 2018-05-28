@@ -32,8 +32,7 @@ ui <- fluidPage(
     
 #OUTPUT
     mainPanel(
-      plotOutput(outputId = "Histogram", height = 500),
-      plotOutput(outputId = "Density", height = 200)
+      plotOutput(outputId = "Histogram", height = 500)
     )
   )
 )
@@ -46,11 +45,6 @@ server <- function(input, output) {
   output$Historgram <- renderPlot({
     ggplot(data = product.table, aes_string(x = input$x, y = input$y)) +
       geom_point(alpha = input$alpha)
-  })
-  
-  output$Density <- renderPlot({
-    ggplot(data = product.table, aes_string(x = input$x)) +
-      geom_density()
   })
   
   output$downloadoutput1 <- downloadHandler(

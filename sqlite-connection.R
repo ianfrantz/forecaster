@@ -9,7 +9,8 @@ hierarchy <- dbGetQuery(forecaster.db, "SELECT * FROM coreproducts")
 
 product.table <- dbGetQuery(forecaster.db, 
           "SELECT product_name, tier_name, offer_number, price, probability
-           FROM coreproducts JOIN pricing USING (product_id)
+           FROM coreproducts 
+           JOIN pricing USING (product_id)
            ORDER BY product_name, tier_name;")
 
 #Close database connection

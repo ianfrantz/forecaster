@@ -14,9 +14,9 @@ trial1plot <- ggplot(data = trial1)
 trial1plot + 
   geom_bar(aes(x = y), fill = "green") + 
   labs(
-    title = "Title: Fuel efficiency generally decreases with engine size",
-    subtitle = "Subtitle: Two seaters (sports cars) are an exception because of their light weight",
-    caption = "Caption: Data from fueleconomy.gov"
+    title = "",
+    subtitle = "",
+    caption = ""
   )
 
 trial1plot + 
