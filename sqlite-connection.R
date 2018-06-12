@@ -25,3 +25,11 @@ save (product.table, file = "./Data/product.table.RData")
 #Write Results-----
 #Connect to SQLite forecaster.db
 forecaster.db <- dbConnect(SQLite(),dbname="./Database/forecaster.db")
+
+#Insert Results
+dbGetQuery(forecaster.db,
+"INSERT INTO results (result_id, datetime, trial_name, result)
+VALUES ('2','02-28-1981:00:00:00', 'Trial1', 'n');")
+
+#Close database connection
+dbDisconnect(forecaster.db)
