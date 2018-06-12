@@ -2,7 +2,7 @@
 library (dplyr) #Use of dplyr package in ProductList function
 
 
-#-----Functions "Simulator" and "ProductList"------
+#Functions "Simulator" and "ProductList"------
 
 #The "Simulator" function is defined here taking four variables. 
   #-weeks: the number of weeks
