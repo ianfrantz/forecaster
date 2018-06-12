@@ -1,3 +1,12 @@
 SELECT product_name, tier_name, offer_number, price, probability
 FROM coreproducts JOIN pricing USING (product_id)
 ORDER BY product_name, tier_name;
+
+CREATE TABLE results (
+result_id INTEGER NOT NULL PRIMARY KEY,
+datetime DATETIME,
+trial_name TEXT,
+result INTEGER);
+
+INSERT INTO results (result_id, datetime, trial_name, result)
+VALUES ('1','02-28-1981:00:00:00', 'Trial1', 'n');
