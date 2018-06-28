@@ -79,7 +79,8 @@ if [[ $createresults == *[yY]* ]]; then
 sqlite3 forecaster.db << EOF
 CREATE TABLE results (
 result_id INTEGER NOT NULL PRIMARY KEY,
-datetime DATETIME,
+date DATE,
+time TIME,
 trial_name TEXT,
 result INTEGER);
 EOF

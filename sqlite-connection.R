@@ -27,9 +27,9 @@ save (product.table, file = "./Data/product.table.RData")
 forecaster.db <- dbConnect(SQLite(),dbname="./Database/forecaster.db")
 
 #Insert Results
-dbGetQuery(forecaster.db,
-"INSERT INTO results (result_id, datetime, trial_name, result)
-VALUES ('2','02-28-1981:00:00:00', 'Trial1', 'n');")
+dbSendQuery(forecaster.db,
+"INSERT INTO results (date, time, trial_name, result)
+VALUES ('localtime', 'Sys.time', 'Trial1', 'n');")
 
 #Close database connection
 dbDisconnect(forecaster.db)
