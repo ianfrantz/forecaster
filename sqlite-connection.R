@@ -1,5 +1,6 @@
 #-----Make sure forecaster is set as working directory-----
 library(RSQLite) #For SQLite
+library(glue) #For glue_sql and INSERT statements
 
 #Read Data-----
 #Connect to SQLite forecaster.db
@@ -28,8 +29,14 @@ forecaster.db <- dbConnect(SQLite(),dbname="./Database/forecaster.db")
 
 #Insert Results
 dbSendQuery(forecaster.db,
-"INSERT INTO results (date, time, trial_name, result)
-VALUES ('localtime', 'Sys.time', 'Trial1', 'n');")
+  glue_sql("INSERT INTO results (date, time, trial_name, result) 
+    VALUES ({paste(Sys.Date())*},
+    {format(Sys.time(),'%X')*},
+    'p1t1',
+    {sum(sim1)*})",
+    .con = forecaster.db)
+)
 
 #Close database connection
 dbDisconnect(forecaster.db)
+
