@@ -14,14 +14,14 @@ Simulator <- function(weeks, price, samplesize, probability) {
   for (i in 1:weeks)
   {
     simulation <- purrr::pmap(list(x = price, size = samplesize, replace = TRUE,  prob = probability), sample)
-    output <- append(output, sum(simulation$price))
+    output <- append(output, sum(simulation$Price))
   }
   return(output)
 }
 
 
 #The "ProductList" function is used to create lists based on "Product X" and "Tier X" data.frames 
-ProductList <- function(product.table, product_name1, tier_name1) {
-  dplyr::filter (product.table, product_name1 == product_name, 
-          tier_name1 == tier_name) %>% as.list() }
+ProductList <- function(product.table, product_name, tier_name) {
+  dplyr::filter (product.table, product_name == ProductName, 
+          tier_name == TierName) %>% as.list() }
 

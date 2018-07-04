@@ -11,8 +11,8 @@ if [[ $coreproducts == *[yY]* ]]; then
 #Initialize forecaster.db and import build coreproducts table
 sqlite3 forecaster.db << EOF
 CREATE TABLE coreproducts (
-product_id INTEGER NOT NULL PRIMARY KEY,
-product_name TEXT);
+ProductId INTEGER NOT NULL PRIMARY KEY,
+ProductName TEXT);
 EOF
 
 else
@@ -44,12 +44,12 @@ if [[ $pricing == *[yY]* ]]; then
 
 sqlite3 forecaster.db << EOF
 CREATE TABLE pricing (
-pricing_id INTEGER NOT NULL PRIMARY KEY,
-tier_name TEXT,
-offer_number INTEGER,
-price INTEGER,
-probability REAL,
-product_id INTEGER NOT NULL REFERENCES coreproducts);
+PricingId INTEGER NOT NULL PRIMARY KEY,
+TierName TEXT,
+OfferNumber INTEGER,
+Price INTEGER,
+Probability REAL,
+ProductId INTEGER NOT NULL REFERENCES coreproducts);
 EOF
 
 else
@@ -78,11 +78,13 @@ if [[ $createresults == *[yY]* ]]; then
 
 sqlite3 forecaster.db << EOF
 CREATE TABLE results (
-result_id INTEGER NOT NULL PRIMARY KEY,
-date DATE,
-time TIME,
-trial_name TEXT,
-result INTEGER);
+ResultId INTEGER NOT NULL PRIMARY KEY,
+Date DATE,
+Time TIME,
+SimulationNumber TEXT,
+Duration INTEGER,
+Sales INTEGER,
+Result INTEGER);
 EOF
 
 else

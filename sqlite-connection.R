@@ -2,6 +2,7 @@
 library(RSQLite) #For SQLite
 library(glue) #For glue_sql and INSERT statements
 
+
 #Read Data-----
 #Connect to SQLite forecaster.db
 forecaster.db <- dbConnect(SQLite(),dbname="./Database/forecaster.db")
@@ -10,10 +11,10 @@ forecaster.db <- dbConnect(SQLite(),dbname="./Database/forecaster.db")
 hierarchy <- dbGetQuery(forecaster.db, "SELECT * FROM coreproducts")
 
 product.table <- dbGetQuery(forecaster.db, 
-          "SELECT product_name, tier_name, offer_number, price, probability
+          "SELECT ProductName, TierName, OfferNumber, Price, Probability
            FROM coreproducts 
-           JOIN pricing USING (product_id)
-           ORDER BY product_name, tier_name;")
+           JOIN pricing USING (ProductId)
+           ORDER BY ProductName, TierName;")
 
 #Close database connection
 dbDisconnect(forecaster.db)
@@ -23,20 +24,24 @@ rm (forecaster.db)
 save (product.table, file = "./Data/product.table.RData")
 
 
+
 #Write Results-----
 #Connect to SQLite forecaster.db
 forecaster.db <- dbConnect(SQLite(),dbname="./Database/forecaster.db")
 
 #Insert Results
 dbSendQuery(forecaster.db,
-  glue_sql("INSERT INTO results (date, time, trial_name, result) 
+  glue_sql("INSERT INTO results (Date, Time, SimulationNumber, Duration, Sales, Result) 
     VALUES ({paste(Sys.Date())*},
     {format(Sys.time(),'%X')*},
-    'p1t1',
+    'Sim1',
+    '52 Weeks',
+    '1 Sale Per Day',
     {sum(sim1)*})",
     .con = forecaster.db)
 )
 
 #Close database connection
 dbDisconnect(forecaster.db)
+rm (forecaster.db)
 
