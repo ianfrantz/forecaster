@@ -2,7 +2,6 @@
 library(RSQLite) #For SQLite
 library(glue) #For glue_sql and INSERT statements
 
-
 #Read Data-----
 #Connect to SQLite forecaster.db
 forecaster.db <- dbConnect(SQLite(),dbname="./Database/forecaster.db")
@@ -22,8 +21,6 @@ rm (forecaster.db)
 
 #Save product.table
 save (product.table, file = "./Data/product.table.RData")
-
-
 
 #Write Results-----
 #Connect to SQLite forecaster.db

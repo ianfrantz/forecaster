@@ -1,7 +1,6 @@
 #-----library (purrr) #For use of `pmap`` in the Simulator function-----
 library (dplyr) #Use of dplyr package in ProductList function
 
-
 #Functions "Simulator" and "ProductList"------
 
 #The "Simulator" function is defined here taking four variables. 
