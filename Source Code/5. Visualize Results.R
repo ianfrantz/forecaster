@@ -1,4 +1,4 @@
-#-----Plotting files-----
+#-----Runs a new default simulation-----
 library(ggplot2)
 #Simulation tial #1 (52 weeks, 1 sale per week)
 y <- Simulator(52, p1t1[4], 1, p1t1[5])
