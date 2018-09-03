@@ -16,10 +16,9 @@ dbSendQuery(forecaster.db,
                      .con = forecaster.db)
 )
 #-----Look at Results-----
-
-dbSendQuery(forecaster.db,
+dbGetQuery(forecaster.db,
             glue_sql("SELECT * 
-                     FROM results",
+                     FROM results;",
                      .con = forecaster.db)
 )
 
@@ -28,4 +27,3 @@ dbSendQuery(forecaster.db,
 
 dbDisconnect(forecaster.db)
 rm (forecaster.db)
-
