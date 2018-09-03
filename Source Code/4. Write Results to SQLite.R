@@ -1,8 +1,10 @@
 #Write Results of Analysis.R to SQLite-----
-#Connect to SQLite forecaster.db
-forecaster.db <- dbConnect(SQLite(),dbname="./Database/forecaster.db")
+library(glue) #For glue_sql and INSERT statements
 
-#Insert Results
+#Connect to SQLite forecaster.db
+forecaster.db <- dbConnect(SQLite(),dbname="../Database/forecaster.db")
+
+#-----Insert Results-----
 dbSendQuery(forecaster.db,
             glue_sql("INSERT INTO results (Date, Time, SimulationNumber, Duration, Sales, Result) 
                      VALUES ({paste(Sys.Date())*},
@@ -13,7 +15,17 @@ dbSendQuery(forecaster.db,
                      {sum(sim1)*})",
                      .con = forecaster.db)
 )
+#-----Look at Results-----
 
-#Close database connection
+dbSendQuery(forecaster.db,
+            glue_sql("SELECT * 
+                     FROM results",
+                     .con = forecaster.db)
+)
+
+#-----Close database connection-----
+
+
 dbDisconnect(forecaster.db)
 rm (forecaster.db)
+

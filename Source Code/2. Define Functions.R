@@ -4,10 +4,10 @@ library (dplyr) #Use of dplyr package in ProductList function
 #-----Functions "Simulator" and "ProductList"------
 
 #The "Simulator" function takes four variables. 
-  #-weeks: the number of weeks
-  #-price: product hierarchical pricing
-  #-samplesize: the number in the sampling distribution
-  #-probability: probability density function
+  #'*weeks*: the number of weeks
+  #'*price*: product hierarchical pricing
+  #'*samplesize*: the number in the sampling distribution
+  #'*probability*: probability density function
 Simulator <- function(weeks, price, samplesize, probability) {
   output <- c ()
   for (i in 1:weeks)
