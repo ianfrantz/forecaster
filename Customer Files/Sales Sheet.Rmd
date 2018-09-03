@@ -1,0 +1,109 @@
+---
+title: "Forecasting Hierarchical Sales Models"
+author: "Ian Frantz [www.ianfrantz.com](www.ianfrantz.com)"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+    word_document:
+      reference_docx: "Sales_Sheet_syles-ref-01.docx"
+#For printing plots
+    fig_height: 6
+    fig_width: 10
+#For data.frames and syntax highlighting
+    print_df: kable
+    highlight: "tango"
+    theme: "united"
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE)
+library(dplyr)
+library(purrr)
+library(ggplot2)
+```
+
+```{r functions, include = FALSE}
+#The "Simulator" function is defined here with four variables. 
+Simulator <- function(weeks, price, samplesize, probability) {
+  output <- c ()
+  for (i in 1:weeks)
+  {
+    simulation <- purrr::pmap(list(x = price, size = samplesize, replace = TRUE,  prob = probability), sample)
+    output <- append(output, sum(simulation$price))
+  }
+  return(output)
+}
+
+
+#The "ProductList" function is used to create lists based on "Product X" and "Tier X" data.frames 
+ProductList <- function(product.table, product_name1, tier_name1) {
+  dplyr::filter (product.table, product_name1 == product_name, 
+          tier_name1 == tier_name) %>% as.list() }
+
+```
+
+
+# What might be the sales results for Drift's Product 1 - Tier 1?
+
+IF:
+
+* Trial 1 - For 52 weeks, Drift makes 1 sale per week.
+
+* Trial 2 - For 1 Quarter, Drift makes 35 sales per week.
+
+```{r product.table, echo=FALSE}
+load (file = "../Data/product.table.RData")
+knitr::kable(product.table,
+             caption = "Hierarchical Sales Model")
+```
+
+```{r create.data, echo=FALSE}
+p1t1 <- ProductList(product.table, "Product 1", "Tier 1")
+```
+
+```{r trial1-visualization, echo=FALSE}
+#Simulation tial #1 (52 weeks, 1 sale per week)
+y <- Simulator(52, p1t1[4], 1, p1t1[5])
+lx <- length(y)
+x <- 1:lx
+
+#trial1 results for 1st Simulator with proportional barchart
+trial1 <- data.frame(x,y)
+
+productplot1 <- ggplot(data = trial1)
+
+productplot1 + 
+  geom_bar(aes(x = y), fill = "green")
+
+```
+
+```{r, trial2-visualization, echo=FALSE}
+y <- Simulator(13, p1t1[4], 35, p1t1[5])
+lx <- length(y)
+x <- 1:lx
+
+trial2 <- data.frame(x,y)
+
+productplot2 <- ggplot(data = trial2) 
+productplot2 + 
+  geom_bar(aes(x = y), fill = "red")
+```
+
+
+***
+
+# ANSWER: 
+
+* For Trial 1 - $`r sum(trial1$y)`
+
+* For Trial 2 - $`r sum(trial2$y)`
+
+***
+## Bonus: What do the combined results of tial1 and trial2 look like?
+
+```{r, combinetrial1and2, echo=FALSE}
+combineresults <-ggplot() + 
+  geom_bar(data=trial1, aes(y), fill="green") + 
+  geom_bar(data=trial2, aes(y), fill="red")
+
+combineresults
+
+```
