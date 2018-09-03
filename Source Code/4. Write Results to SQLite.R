@@ -16,16 +16,25 @@ dbSendQuery(forecaster.db,
                      .con = forecaster.db)
 )
 #-----Look at Results-----
-
-dbSendQuery(forecaster.db,
+dbGetQuery(forecaster.db,
             glue_sql("SELECT * 
                      FROM results",
                      .con = forecaster.db)
 )
 
+#'Create *dbreults* as a vector
+dbresults <- dbGetQuery(forecaster.db,
+                         glue_sql("SELECT * 
+                                  FROM results",
+                                  .con = forecaster.db)
+)
+
+#'*SAVE - dbresults* as an *Rdata* file
+save (dbresults, file = "dbresults.Rdata")
+
+
 #-----Close database connection-----
-
-
 dbDisconnect(forecaster.db)
 rm (forecaster.db)
 
+#'Write () 
