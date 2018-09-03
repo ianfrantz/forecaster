@@ -5,7 +5,8 @@ library(tidyverse)
 library(DT)
 
 # Load data
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_4850/datasets/movies.Rdata"))
+load("./dbresults.Rdata")
+movies <- dbresults
 
 # Define UI for application that plots features of movies
 ui <- fluidPage(
@@ -18,20 +19,20 @@ ui <- fluidPage(
     sidebarPanel(
       # Select variable for y-axis
       selectInput(inputId = "y", label = "Y-axis:",
-                  choices = c("imdb_rating", "imdb_num_votes", "critics_score", "audience_score", "runtime"),
-                  selected = "audience_score"),
+                  choices = c("Result", "Duration"),
+                  selected = "Result"),
       # Select variable for x-axis
       selectInput(inputId = "x", label = "X-axis:",
-                  choices = c("imdb_rating", "imdb_num_votes", "critics_score", "audience_score", "runtime"),
-                  selected = "critics_score")
+                  choices = c("Date", "Time", "SimulationNumber"),
+                  selected = "Date")
     ),
     
     # Output:
     mainPanel(
       # Show scatterplot
-      plotOutput(outputId = "scatterplot", hover = "plot_hover"),
+      plotOutput(outputId = "scatterplot", brush = "plot_brush"),
       # Show data table
-      dataTableOutput(outputId = "moviestable"),
+      dataTableOutput(outputId = "movies"),
       br()
     )
   )
@@ -48,8 +49,8 @@ server <- function(input, output) {
   
   # Print data table
   output$moviestable <- DT::renderDataTable({
-    nearPoints(movies, coordinfo = input$plot_hover) %>% 
-      select(title, audience_score, critics_score)
+    nearPoints(movies, coordinfo = input$plot_brush) %>% 
+      select(dbresults, Date, Result)
   })
   
 }

@@ -23,4 +23,3 @@ Simulator <- function(weeks, price, samplesize, probability) {
 ProductList <- function(product.table, product_name, tier_name) {
   dplyr::filter (product.table, product_name == ProductName, 
           tier_name == TierName) %>% as.list() }
-

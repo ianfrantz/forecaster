@@ -35,10 +35,4 @@ save (dbresults, file = "dbresults.Rdata")
 
 #-----Close database connection-----
 dbDisconnect(forecaster.db)
-<<<<<<< HEAD
 rm (forecaster.db)
-
-#'Write () 
-=======
-rm (forecaster.db)
->>>>>>> database

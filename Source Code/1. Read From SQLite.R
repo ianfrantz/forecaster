@@ -20,4 +20,3 @@ rm (forecaster.db)
 
 #Save product.table
 save (product.table, file = "../Data/product.table.RData")
-
