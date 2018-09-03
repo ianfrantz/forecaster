@@ -18,7 +18,7 @@ dbSendQuery(forecaster.db,
 #-----Look at Results-----
 dbGetQuery(forecaster.db,
             glue_sql("SELECT * 
-                     FROM results",
+                     FROM results;",
                      .con = forecaster.db)
 )
 
@@ -35,6 +35,10 @@ save (dbresults, file = "dbresults.Rdata")
 
 #-----Close database connection-----
 dbDisconnect(forecaster.db)
+<<<<<<< HEAD
 rm (forecaster.db)
 
 #'Write () 
+=======
+rm (forecaster.db)
+>>>>>>> database
