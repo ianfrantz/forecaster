@@ -49,7 +49,7 @@ server <- function(input, output) {
   
   # Print data table
   output$moviestable <- DT::renderDataTable({
-    nearPoints(movies, coordinfo = input$plot_brush) %>% 
+    nearPoints(dbresults, coordinfo = input$plot_brush) %>% 
       select(dbresults, Date, Result)
   })
   
