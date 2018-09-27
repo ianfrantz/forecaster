@@ -6,7 +6,6 @@ library(DT)
 
 # Load data
 load("./dbresults.Rdata")
-movies <- dbresults
 
 # Define UI for application that plots features of movies
 ui <- fluidPage(
@@ -32,7 +31,7 @@ ui <- fluidPage(
       # Show scatterplot
       plotOutput(outputId = "scatterplot", brush = "plot_brush"),
       # Show data table
-      dataTableOutput(outputId = "movies"),
+      dataTableOutput(outputId = "dbresults_table"),
       br()
     )
   )
@@ -43,18 +42,17 @@ server <- function(input, output) {
   
   # Create scatterplot object the plotOutput function is expecting
   output$scatterplot <- renderPlot({
-    ggplot(data = movies, aes_string(x = input$x, y = input$y)) +
-      geom_point()
+    ggplot(data = dbresults, aes_string(x = input$x, y = input$y)) +
+    geom_point()
   })
   
-  # Print data table
-  output$moviestable <- DT::renderDataTable({
-    nearPoints(dbresults, coordinfo = input$plot_brush) %>% 
-      select(dbresults, Date, Result)
+  # Print dbresults table based on brush selection
+  output$dbresults_table <- DT::renderDataTable({
+    brushedPoints(dbresults, brush = input$plot_brush, xvar = input$x, yvar = input$y) %>% 
+      select(Date, SimulationNumber, Result)
   })
   
 }
 
 # Create a Shiny app object
 shinyApp(ui = ui, server = server)
-

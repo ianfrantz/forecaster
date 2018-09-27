@@ -24,13 +24,13 @@ dbGetQuery(forecaster.db,
 
 #'Create *dbreults* as a vector
 dbresults <- dbGetQuery(forecaster.db,
-                         glue_sql("SELECT * 
-                                  FROM results",
-                                  .con = forecaster.db)
+            glue_sql("SELECT * 
+                      FROM results",
+                      .con = forecaster.db)
 )
 
-#'*SAVE - dbresults* as an *Rdata* file
-save (dbresults, file = "dbresults.Rdata")
+#'*SAVE - dbresults.Rdata* 
+save (dbresults, file = "./app.R/dbresults.Rdata")
 
 
 #-----Close database connection-----
