@@ -29,8 +29,8 @@ dbresults <- dbGetQuery(forecaster.db,
                       .con = forecaster.db)
 )
 
-#'*SAVE - dbresults.Rdata* 
-save (dbresults, file = "./app.R/dbresults.Rdata")
+#'SAVE - *dbresults.Rdata* 
+save (dbresults, file = "./Shiny/dbresults.Rdata")
 
 
 #-----Close database connection-----

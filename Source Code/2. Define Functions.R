@@ -1,4 +1,5 @@
-#-----library (purrr) #For use of `pmap`` in the Simulator function-----
+#-----Load library (dplyr)-----
+#purrr::pmap used in the Simulator function
 library (dplyr) #Use of dplyr package in ProductList function
 
 #-----Functions "Simulator" and "ProductList"------
@@ -19,7 +20,7 @@ Simulator <- function(weeks, price, samplesize, probability) {
 }
 
 
-#The "ProductList" function is used to create lists based on "Product X" and "Tier X" data.frames 
+#The "ProductList" function is used to create lists based on "Product X" and "Tier X" data.frame
 ProductList <- function(product.table, product_name, tier_name) {
   dplyr::filter (product.table, product_name == ProductName, 
           tier_name == TierName) %>% as.list() }
