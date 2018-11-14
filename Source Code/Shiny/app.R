@@ -28,40 +28,53 @@ Simulator <- function(weeks, price, samplesize, probability) {
 ProductList <- function(product.table, product_name, tier_name) {
   dplyr::filter (product.table, product_name == ProductName, 
                  tier_name == TierName) %>% as.list() }
-#-----Shiny-----
 
-# Load data
+#-----Load data-----
 load("./dbresults.Rdata")
 
+#-----Shiny-----
 
-# Define UI for forecaster results
-ui <- fluidPage(
-  
-  br(),
-  
-  # Sidebar layout with a input and output definitions
-  sidebarLayout(
-    # Inputs
-    sidebarPanel(
-      # Select variable for y-axis
-      selectInput(inputId = "y", label = "Y-axis:",
-                  choices = c("Result", "Duration"),
-                  selected = "Result"),
-      # Select variable for x-axis
-      selectInput(inputId = "x", label = "X-axis:",
-                  choices = c("Date", "Time", "SimulationNumber"),
-                  selected = "Date")
-    ),
-    
-    # Output:
-    mainPanel(
-      # Show scatterplot
-      plotOutput(outputId = "scatterplot", brush = "plot_brush"),
-      # Show data table
-      dataTableOutput(outputId = "dbresults_table"),
-      br()
+# dashboardSidebar
+sidebar <- dashboardSidebar(
+  sidebarMenu(
+    menuItem("Sales Forecasting", tabName = "salesforecast", icon = icon("dashboard")),
+    menuItem("Inputs", icon = icon("th"), startExpanded = FALSE,
+             # Date Input
+             dateRangeInput(inputId = "daterange", label = "Date Range"
+             ),
+             # Select y-axis
+             selectInput(inputId = "y", label = "Y-axis:",
+                         choices = c("Result", "Duration"),
+                         selected = "Result"),
+             # Select x-axis
+             selectInput(inputId = "x", label = "X-axis:",
+                         choices = c("Date", "Time", "SimulationNumber"),
+                         selected = "Date")
     )
   )
+)
+
+# dashboardBody
+body <- dashboardBody(
+  # Scatterplot
+  fluidRow(
+    box(plotOutput(outputId = "scatterplot", brush = "plot_brush"), width = 12)
+    ),
+  # Data Table
+  fluidRow(
+    box(dataTableOutput(outputId = "dbresults_table")),
+    br()  
+    )
+)
+
+# UI portion
+ui <- dashboardPage(
+  skin = "green",
+  header = dashboardHeader(
+    title = "Hierarchical Sales Forecasting",
+    titleWidth = 400),
+  sidebar = sidebar,
+  body = body
 )
 
 # Define server function required to create the scatterplot
