@@ -32,13 +32,12 @@ ProductList <- function(product.table, product_name, tier_name) {
 #-----Load data-----
 load("./dbresults.Rdata")
 
-#-----Shiny-----
 
-# dashboardSidebar
+#-----dashboardSidebar-----
 sidebar <- dashboardSidebar(
   sidebarMenu(
     menuItem("Sales Forecasting", tabName = "salesforecast", icon = icon("dashboard")),
-    menuItem("Inputs", icon = icon("th"), startExpanded = FALSE,
+    menuItem("Result Filters", tabName = "resultsfilters", icon = icon("th"), startExpanded = FALSE,
              # Date Input
              dateRangeInput(inputId = "daterange", label = "Date Range"
              ),
@@ -54,12 +53,19 @@ sidebar <- dashboardSidebar(
   )
 )
 
-# dashboardBody
+#-----dashboardBody-----
 body <- dashboardBody(
   # Scatterplot
   fluidRow(
-    box(plotOutput(outputId = "scatterplot", brush = "plot_brush"), width = 12)
+    box(plotOutput(outputId = "scatterplot", brush = "plot_brush"), width = 8),
+    br()
     ),
+  
+  tags$head(
+    type = "text/css",
+    href = "xxx.css"
+  ),
+  
   # Data Table
   fluidRow(
     box(dataTableOutput(outputId = "dbresults_table")),
@@ -67,7 +73,7 @@ body <- dashboardBody(
     )
 )
 
-# UI portion
+#-----UI-----
 ui <- dashboardPage(
   skin = "green",
   header = dashboardHeader(
@@ -77,7 +83,7 @@ ui <- dashboardPage(
   body = body
 )
 
-# Define server function required to create the scatterplot
+#-----Server-----
 server <- function(input, output) {
   
   # Create scatterplot object the plotOutput function is expecting
