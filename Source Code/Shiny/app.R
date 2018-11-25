@@ -4,7 +4,12 @@ library(ggplot2)
 library(tidyverse)
 library(DT)
 library(shinydashboard)
-library (dplyr) #Use of dplyr package in ProductList function
+library(dplyr) #Use of dplyr package in ProductList function
+library(plotly)
+#-----Load local data-----
+load("./dbresults.Rdata")
+source("./helper.R") #Used to create custom `uiOutput("hover_info")`.
+
 
 #-----Functions "Simulator" and "ProductList"------
 
@@ -28,10 +33,6 @@ Simulator <- function(weeks, price, samplesize, probability) {
 ProductList <- function(product.table, product_name, tier_name) {
   dplyr::filter (product.table, product_name == ProductName, 
                  tier_name == TierName) %>% as.list() }
-
-#-----Load data-----
-load("./dbresults.Rdata")
-
 
 #-----dashboardSidebar-----
 sidebar <- dashboardSidebar(
@@ -57,10 +58,11 @@ sidebar <- dashboardSidebar(
 body <- dashboardBody(
   # Scatterplot
   fluidRow(
-    box(plotOutput(outputId = "scatterplot", brush = "plot_brush"), width = 8),
+    box(plotOutput(outputId = "scatterplot", brush = "plot_brush", hover = "plot_hover"), width = 8),
+    uiOutput("hover_info"),
     br()
     ),
-  
+  # Place for css files in the body
   tags$head(
     type = "text/css",
     href = "xxx.css"
@@ -97,7 +99,31 @@ server <- function(input, output) {
     brushedPoints(dbresults, brush = input$plot_brush, xvar = input$x, yvar = input$y) %>% 
       select(Date, SimulationNumber, Result)
   })
-  
+ 
+  output$hover_info <- renderUI({
+    
+    #get the x-y coordinates from plot
+    hover <- input$plot_hover
+    
+    #translate x-y coordinates to a row in 
+    #myData() using nearPoints
+    point <- nearPoints(df=dbresults, coordinfo=hover, 
+                        maxpoints = 1, threshold = 3)
+    #if nearPoints returns a data row, then show tooltip
+    if(nrow(point)!=0){
+      
+      #return_tooltip returns both the text of tooltip (output_list$output_string),
+      #but also where on plot to display it (output_list$style).
+      output_list <- return_tooltip(hover, point)
+      
+      #use wellPanel() to display the tooltip
+      wellPanel(
+        style = output_list$style,
+        p(HTML(output_list$output_string))
+      )
+    }
+    
+  }) 
 }
 
 # Create a Shiny app object
