@@ -5,39 +5,17 @@ library(tidyverse)
 library(DT)
 library(shinydashboard)
 library(dplyr) #Use of dplyr package in ProductList function
-library(plotly)
 #-----Load local data-----
 load("./dbresults.Rdata")
-source("./helper.R") #Used to create custom `uiOutput("hover_info")`.
+#-----Load custom functions-----
+source("./functions.R") #'Functions are in order: *Simulator*, *ProductList*, *return_tooltip*
 
-
-#-----Functions "Simulator" and "ProductList"------
-
-#The "Simulator" function takes four variables. 
-#'*weeks*: the number of weeks
-#'*price*: product hierarchical pricing
-#'*samplesize*: the number in the sampling distribution
-#'*probability*: probability density function
-Simulator <- function(weeks, price, samplesize, probability) {
-  output <- c ()
-  for (i in 1:weeks)
-  {
-    simulation <- purrr::pmap(list(x = price, size = samplesize, replace = TRUE,  prob = probability), sample)
-    output <- append(output, sum(simulation$Price))
-  }
-  return(output)
-}
-
-
-#The "ProductList" function is used to create lists based on "Product X" and "Tier X" data.frame
-ProductList <- function(product.table, product_name, tier_name) {
-  dplyr::filter (product.table, product_name == ProductName, 
-                 tier_name == TierName) %>% as.list() }
-
-#-----dashboardSidebar-----
+#'-----*sidebar defined*-----
 sidebar <- dashboardSidebar(
   sidebarMenu(
-    menuItem("Sales Forecasting", tabName = "salesforecast", icon = icon("dashboard")),
+    menuItem("Sales Forecasting", tabName = "salesforecast", icon = icon("dashboard"), startExpanded = TRUE),
+    menuSubItem("Retail Store", tabName = "subitem1"),
+    menuSubItem("Plant Yields", tabName = "subitem2"),
     menuItem("Result Filters", tabName = "resultsfilters", icon = icon("th"), startExpanded = FALSE,
              # Date Input
              dateRangeInput(inputId = "daterange", label = "Date Range"
@@ -54,14 +32,18 @@ sidebar <- dashboardSidebar(
   )
 )
 
-#-----dashboardBody-----
+#'-----*body Defined*-----
 body <- dashboardBody(
+  # Tabs
+  tabItem("subitem1", "Sub-item 1 tab content"),
+  tabItem("subitem2", "Sub-item 2 tab content"),
   # Scatterplot
   fluidRow(
     box(plotOutput(outputId = "scatterplot", brush = "plot_brush", hover = "plot_hover"), width = 8),
     uiOutput("hover_info"),
     br()
     ),
+  
   # Place for css files in the body
   tags$head(
     type = "text/css",
@@ -75,18 +57,24 @@ body <- dashboardBody(
     )
 )
 
-#-----UI-----
+#'-----*UI Defined*-----
 ui <- dashboardPage(
   skin = "green",
   header = dashboardHeader(
     title = "Hierarchical Sales Forecasting",
     titleWidth = 400),
   sidebar = sidebar,
+  textOutput("res"),
   body = body
 )
 
-#-----Server-----
+#'-----*Server Defined*-----
 server <- function(input, output) {
+  # For Menu items and subitems
+  output$res <- renderText({
+    req(input$sidebarItemExpanded)
+    paste("Expanded menuItem:", input$sidebarItemExpanded)
+  })
   
   # Create scatterplot object the plotOutput function is expecting
   output$scatterplot <- renderPlot({
@@ -100,30 +88,25 @@ server <- function(input, output) {
       select(Date, SimulationNumber, Result)
   })
  
+  # Enable hover
   output$hover_info <- renderUI({
-    
-    #get the x-y coordinates from plot
     hover <- input$plot_hover
-    
-    #translate x-y coordinates to a row in 
-    #myData() using nearPoints
     point <- nearPoints(df=dbresults, coordinfo=hover, 
                         maxpoints = 1, threshold = 3)
     #if nearPoints returns a data row, then show tooltip
     if(nrow(point)!=0){
-      
-      #return_tooltip returns both the text of tooltip (output_list$output_string),
-      #but also where on plot to display it (output_list$style).
+      #return_tooltip resides in functions.R 
+      #returns the text of tooltip (output_list$output_string),
+      #where on plot to display it (output_list$style).
       output_list <- return_tooltip(hover, point)
-      
-      #use wellPanel() to display the tooltip
       wellPanel(
         style = output_list$style,
         p(HTML(output_list$output_string))
       )
-    }
-    
+      }
   }) 
+
+  
 }
 
 # Create a Shiny app object
