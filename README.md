@@ -2,7 +2,6 @@
 title: "READ ME"
 author: "Ian Frantz (www.ianfrantz.com)"
 date modified: December 1, 2018
-output: html_document
 ---
 
 ![](https://travis-ci.org/jasdumas/shinyLP.svg?branch=master)
