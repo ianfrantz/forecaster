@@ -16,18 +16,28 @@ sidebar <- dashboardSidebar(
     menuItem("Sales Forecasting", tabName = "salesforecast", icon = icon("dashboard"), startExpanded = TRUE),
     menuSubItem("Retail Store", tabName = "subitem1"),
     menuSubItem("Plant Yields", tabName = "subitem2"),
+    menuItem("Simulation Input", tabName = "siminput", icon = icon("signal"), startExpanded = FALSE,
+            # Simulation Input
+            textInput(inputId = "simname", label = "Simulation Name"),
+            # Submit Results
+            submitButton()
+            ),
+            
+            
     menuItem("Result Filters", tabName = "resultsfilters", icon = icon("th"), startExpanded = FALSE,
-             # Date Input
-             dateRangeInput(inputId = "daterange", label = "Date Range"
-             ),
-             # Select y-axis
-             selectInput(inputId = "y", label = "Y-axis:",
-                         choices = c("Result", "Duration"),
-                         selected = "Result"),
-             # Select x-axis
-             selectInput(inputId = "x", label = "X-axis:",
-                         choices = c("Date", "Time", "SimulationNumber"),
-                         selected = "Date")
+                      # Date Input
+                      dateRangeInput(inputId = "daterange", label = "Date Range"
+                      ),
+                      # Select y-axis
+                      selectInput(inputId = "y", label = "Y-axis:",
+                                  choices = c("Result", "Duration"),
+                                  selected = "Result"),
+                      # Select x-axis
+                      selectInput(inputId = "x", label = "X-axis:",
+                                  choices = c("Date", "Time", "SimulationNumber"),
+                                  selected = "Date"),
+             textInput(inputId = "plottext", label = "plottext")
+    
     )
   )
 )
