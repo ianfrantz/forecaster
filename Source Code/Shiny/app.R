@@ -22,22 +22,19 @@ sidebar <- dashboardSidebar(
             # Submit Results
             submitButton()
             ),
-            
-            
     menuItem("Result Filters", tabName = "resultsfilters", icon = icon("th"), startExpanded = FALSE,
-                      # Date Input
-                      dateRangeInput(inputId = "daterange", label = "Date Range"
-                      ),
-                      # Select y-axis
-                      selectInput(inputId = "y", label = "Y-axis:",
-                                  choices = c("Result", "Duration"),
-                                  selected = "Result"),
-                      # Select x-axis
-                      selectInput(inputId = "x", label = "X-axis:",
-                                  choices = c("Date", "Time", "SimulationNumber"),
-                                  selected = "Date"),
-             textInput(inputId = "plottext", label = "plottext")
-    
+            # Date Input
+            dateRangeInput(inputId = "daterange", label = "Date Range"
+            ),
+            # Select y-axis
+            selectInput(inputId = "y", label = "Y-axis:",
+            choices = c("Result", "Duration"),
+            selected = "Result"),
+            # Select x-axis
+            selectInput(inputId = "x", label = "X-axis:",
+            choices = c("Date", "Time", "SimulationNumber"),
+            selected = "Date"),
+            textInput(inputId = "plottext", label = "plottext")
     )
   )
 )
