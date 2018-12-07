@@ -10,58 +10,30 @@ load("./dbresults.Rdata")
 #-----Load custom functions-----
 source("./functions.R") #'Functions are in order: *Simulator*, *ProductList*, *return_tooltip*
 
-#'-----*sidebar defined*-----
-sidebar <- dashboardSidebar(
-  sidebarMenu(
-    menuItem("Sales Forecasting", tabName = "salesforecast", icon = icon("dashboard"), startExpanded = TRUE),
-    menuSubItem("Retail Store", tabName = "subitem1"),
-    menuSubItem("Plant Yields", tabName = "subitem2"),
-    menuItem("Simulation Input", tabName = "siminput", icon = icon("signal"), startExpanded = FALSE,
-            # Simulation Input
-            textInput(inputId = "simname", label = "Simulation Name"),
-            # Submit Results
-            submitButton()
-            ),
-    menuItem("Result Filters", tabName = "resultsfilters", icon = icon("th"), startExpanded = FALSE,
-            # Date Input
-            dateRangeInput(inputId = "daterange", label = "Date Range"
-            ),
-            # Select y-axis
-            selectInput(inputId = "y", label = "Y-axis:",
-            choices = c("Result", "Duration"),
-            selected = "Result"),
-            # Select x-axis
-            selectInput(inputId = "x", label = "X-axis:",
-            choices = c("Date", "Time", "SimulationNumber"),
-            selected = "Date"),
-            textInput(inputId = "plottext", label = "plottext")
-    )
-  )
-)
+#'-----*sidebar built from reactive "menu"*-----
+sidebar <- dashboardSidebar(sidebarMenu(id = "menu", sidebarMenuOutput("menu")))
 
 #'-----*body Defined*-----
 body <- dashboardBody(
-  # Tabs
-  tabItem("subitem1", "Sub-item 1 tab content"),
-  tabItem("subitem2", "Sub-item 2 tab content"),
-  # Scatterplot
-  fluidRow(
-    box(plotOutput(outputId = "scatterplot", brush = "plot_brush", hover = "plot_hover"), width = 8),
-    uiOutput("hover_info"),
-    br()
-    ),
-  
-  # Place for css files in the body
-  tags$head(
-    type = "text/css",
-    href = "xxx.css"
-  ),
-  
-  # Data Table
-  fluidRow(
-    box(dataTableOutput(outputId = "dbresults_table")),
-    br()  
-    )
+  (tabItems
+   (tabItem
+     (tabName = "subitem1", h2("Dashboard plots"),
+        fluidRow( 
+        h4("Scatterplot"),
+        box(plotOutput(outputId = "scatterplot", brush = "plot_brush", hover = "plot_hover"), width =8),
+        uiOutput("hover_info"),
+        br(),
+        tags$head(
+        type = "text/css",
+        href = "xxx.css"),
+        fluidRow(
+        box(dataTableOutput(outputId = "dbresults_table"))
+        )
+        )
+      ),
+     tabItem(tabName = "subitem2", h2("Dashboard tab content"))
+   )
+  )
 )
 
 #'-----*UI Defined*-----
@@ -76,11 +48,48 @@ ui <- dashboardPage(
 )
 
 #'-----*Server Defined*-----
-server <- function(input, output) {
-  # For Menu items and subitems
+server <- function(input, output, session) {
+  
+  # ui TextOuput - For Menu items and subitems
   output$res <- renderText({
     req(input$sidebarItemExpanded)
     paste("Expanded menuItem:", input$sidebarItemExpanded)
+  })
+  
+  # Reactive sidebarMenu named "menu"
+  output$menu <- renderMenu({
+    sidebarMenu(
+      menuItem("Plots Menu", tabName = "subitem1", icon = icon("line-chart")),
+      menuItem("Table Menu", icon = icon("info"),
+               menuSubItem(
+                 "Dashboard", tabName = "subitem2", icon = icon("calendar")
+               ),
+               selectInput(
+                 inputId = "mcm", label = "Some label", multiple = TRUE,
+                 choices = unique(mtcars$cyl), selected = unique(mtcars$cyl)
+               )
+               ),
+      menuItem("Simulation Input", tabName = "siminput", icon = icon("signal"), startExpanded = FALSE,
+               # Simulation Input
+               textInput(inputId = "simname", label = "Simulation Name"),
+               # Submit Results
+               submitButton()
+              ),
+      menuItem("Result Filters", tabName = "resultsfilters", icon = icon("th"), startExpanded = FALSE,
+               # Date Input
+               dateRangeInput(inputId = "daterange", label = "Date Range"
+               ),
+               # Select y-axis
+               selectInput(inputId = "y", label = "Y-axis:",
+                           choices = c("Result", "Duration"),
+                           selected = "Result"),
+               # Select x-axis
+               selectInput(inputId = "x", label = "X-axis:",
+                           choices = c("Date", "Time", "SimulationNumber"),
+                           selected = "Date"),
+               textInput(inputId = "plottext", label = "plottext")
+              )
+      )
   })
   
   # Create scatterplot object the plotOutput function is expecting
