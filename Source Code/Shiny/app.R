@@ -13,7 +13,7 @@ source("./functions.R") #'Functions are in order: *Simulator*, *ProductList*, *r
 #'-----*sidebar defined*-----
 sidebar <- dashboardSidebar(
   sidebarMenu(
-    menuItem("Sales Forecasting", tabName = "salesforecast", icon = icon("dashboard"), startExpanded = TRUE),
+    #menuItem("Sales Forecasting", tabName = "salesforecast", icon = icon("dashboard"), startExpanded = TRUE),
     menuSubItem("Retail Store", tabName = "subitem1"),
     menuSubItem("Plant Yields", tabName = "subitem2"),
     menuItem("Simulation Input", tabName = "siminput", icon = icon("signal"), startExpanded = FALSE,
@@ -36,31 +36,29 @@ sidebar <- dashboardSidebar(
             selected = "Date"),
             textInput(inputId = "plottext", label = "plottext")
     )
-  )
+  ),
+  sidebarMenuOutput("menu")
 )
 
 #'-----*body Defined*-----
 body <- dashboardBody(
   # Tabs
-  tabItem("subitem1", "Sub-item 1 tab content"),
-  tabItem("subitem2", "Sub-item 2 tab content"),
-  # Scatterplot
-  fluidRow(
-    box(plotOutput(outputId = "scatterplot", brush = "plot_brush", hover = "plot_hover"), width = 8),
-    uiOutput("hover_info"),
-    br()
-    ),
-  
-  # Place for css files in the body
-  tags$head(
-    type = "text/css",
-    href = "xxx.css"
-  ),
-  
-  # Data Table
-  fluidRow(
+  tabItems
+    (tabItem
+      (tabName = "subitem1", "Sub-item 1 tab content"),
+      fluidRow(
+      box(plotOutput(outputId = "scatterplot", brush = "plot_brush", hover = "plot_hover"), width = 8),
+      uiOutput("hover_info"),
+      br(),
+      tags$head(
+      type = "text/css",
+      href = "xxx.css")
+            )
+      ),
+    tabItem(tabName = "subitem2", "Sub-item 2 tab content"),
+    fluidRow(
     box(dataTableOutput(outputId = "dbresults_table")),
-    br()  
+    br() 
     )
 )
 
@@ -76,7 +74,14 @@ ui <- dashboardPage(
 )
 
 #'-----*Server Defined*-----
-server <- function(input, output) {
+server <- function(input, output, session) {
+  output$menu <- renderMenu({
+    sidebarMenu(
+      menuItem("Plots Menu", tabName = "subitem1", icon = icon("line-chart")),
+      menuItem("Table Menu", tabName="subitem2", icon = icon("calendar"))
+    )
+  })
+  
   # For Menu items and subitems
   output$res <- renderText({
     req(input$sidebarItemExpanded)
