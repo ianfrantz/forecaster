@@ -1,7 +1,6 @@
 # Load packages
 library(shiny)
 library(ggplot2)
-library(tidyverse)
 library(DT)
 library(shinydashboard)
 library(dplyr) #Use of dplyr package in ProductList function
@@ -20,18 +19,18 @@ body <- dashboardBody(
      (tabName = "subitem1", h2("Dashboard plots"),
         fluidRow( 
         h4("Scatterplot"),
-        box(plotOutput(outputId = "scatterplot", brush = "plot_brush", hover = "plot_hover"), width =8),
+        box(plotOutput(outputId = "scatterplot", brush = "plot_brush", hover = "plot_hover"), width = 8),
         uiOutput("hover_info"),
         br(),
         tags$head(
         type = "text/css",
         href = "xxx.css"),
         fluidRow(
-        box(dataTableOutput(outputId = "dbresults_table"))
+        box(dataTableOutput(outputId = "dbresults_table"), width = 8)
         )
         )
       ),
-     tabItem(tabName = "subitem2", h2("Dashboard tab content"))
+     tabItem(tabName = "subitem2", h2("Create a Simulation"))
    )
   )
 )
@@ -59,22 +58,16 @@ server <- function(input, output, session) {
   # Reactive sidebarMenu named "menu"
   output$menu <- renderMenu({
     sidebarMenu(
-      menuItem("Plots Menu", tabName = "subitem1", icon = icon("line-chart")),
-      menuItem("Table Menu", icon = icon("info"),
-               menuSubItem(
-                 "Dashboard", tabName = "subitem2", icon = icon("calendar")
-               ),
-               selectInput(
-                 inputId = "mcm", label = "Some label", multiple = TRUE,
-                 choices = unique(mtcars$cyl), selected = unique(mtcars$cyl)
-               )
-               ),
-      menuItem("Simulation Input", tabName = "siminput", icon = icon("signal"), startExpanded = FALSE,
-               # Simulation Input
-               textInput(inputId = "simname", label = "Simulation Name"),
-               # Submit Results
-               submitButton()
+      menuItem("Forecasting Results", tabName = "subitem1", icon = icon("bar-chart")),
+      menuItem("Simulation", icon = icon("signal"),
+              menuSubItem(
+              "Dashboard", tabName = "subitem2", icon = icon("bar-chart")
               ),
+              # Simulation Name
+              textInput(inputId = "simname", label = "Simulation Name"),
+              # Submit Results
+              submitButton()
+               ),
       menuItem("Result Filters", tabName = "resultsfilters", icon = icon("th"), startExpanded = FALSE,
                # Date Input
                dateRangeInput(inputId = "daterange", label = "Date Range"
