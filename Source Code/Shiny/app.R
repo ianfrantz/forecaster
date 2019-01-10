@@ -6,6 +6,8 @@ library(shinydashboard)
 library(dplyr) #Use of dplyr package in ProductList function
 #-----Load local data-----
 load("./dbresults.Rdata")
+load("./product.table.RData")
+
 #-----Load custom functions-----
 source("./functions.R") #'Functions are in order: *Simulator*, *ProductList*, *return_tooltip*
 
@@ -22,15 +24,23 @@ body <- dashboardBody(
         box(plotOutput(outputId = "scatterplot", brush = "plot_brush", hover = "plot_hover"), width = 8),
         uiOutput("hover_info"),
         br(),
+        #Begin placeholder for eventual css
         tags$head(
         type = "text/css",
         href = "xxx.css"),
+        #End placeholder for css
         fluidRow(
         box(dataTableOutput(outputId = "dbresults_table"), width = 8)
         )
         )
       ),
-     tabItem(tabName = "subitem2", h2("Create a Simulation"))
+  tabItem
+     (tabName = "subitem2", h2("Create a Simulation"),
+        fluidRow(
+        h1("Input Results"), 
+        box()
+        )
+        )
    )
   )
 )
@@ -49,6 +59,9 @@ ui <- dashboardPage(
 #'-----*Server Defined*-----
 server <- function(input, output, session) {
   
+  # Numeric Input
+  
+  
   # ui TextOuput - For Menu items and subitems
   output$res <- renderText({
     req(input$sidebarItemExpanded)
@@ -63,11 +76,13 @@ server <- function(input, output, session) {
               menuSubItem(
               "Dashboard", tabName = "subitem2", icon = icon("bar-chart")
               ),
-              # Simulation Name
+              # Simulation Parameter Names
               textInput(inputId = "simname", label = "Simulation Name"),
+              selectInput(inputId = "productname", label = "Product Name", choices = product.table$ProductName),
+              selectInput(inputId = "tiername", label = "Tier Name", choices = product.table$TierName),
               # Submit Results
-              submitButton()
-               ),
+              submitButton(text = "Run Simulation")
+              ),
       menuItem("Result Filters", tabName = "resultsfilters", icon = icon("th"), startExpanded = FALSE,
                # Date Input
                dateRangeInput(inputId = "daterange", label = "Date Range"
@@ -85,19 +100,25 @@ server <- function(input, output, session) {
       )
   })
   
-  # Create scatterplot object the plotOutput function is expecting
+#-----Start output values-----
+  #Output for Simulator Input
+  # output$simulationresults <- ({
+  #   input$simname <- ProductList(product.table, input$productname, input$tiername)
+  # })
+
+  #Create scatterplot object the plotOutput function is expecting
   output$scatterplot <- renderPlot({
     ggplot(data = dbresults, aes_string(x = input$x, y = input$y)) +
     geom_point()
   })
   
-  # Print dbresults table based on brush selection
+  #Print dbresults table based on brush selection
   output$dbresults_table <- DT::renderDataTable({
     brushedPoints(dbresults, brush = input$plot_brush, xvar = input$x, yvar = input$y) %>% 
-      select(Date, SimulationNumber, Result)
+    select(Date, SimulationNumber, Result)
   })
  
-  # Enable hover
+  #Enable hover
   output$hover_info <- renderUI({
     hover <- input$plot_hover
     point <- nearPoints(df=dbresults, coordinfo=hover, 
@@ -118,5 +139,5 @@ server <- function(input, output, session) {
   
 }
 
-# Create a Shiny app object
+#Create a Shiny app object
 shinyApp(ui = ui, server = server)

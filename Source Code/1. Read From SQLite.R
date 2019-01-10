@@ -18,5 +18,6 @@ product.table <- dbGetQuery(forecaster.db,
 dbDisconnect(forecaster.db)
 rm (forecaster.db)
 
-#Save product.table
-save (product.table, file = "../Data/product.table.RData")
+#Save product.table for Shiny
+save (product.table, file = "./Shiny/product.table.RData")
+
