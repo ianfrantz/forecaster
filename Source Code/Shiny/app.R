@@ -38,7 +38,7 @@ body <- dashboardBody(
      (tabName = "subitem2", h2("Create a Simulation"),
         fluidRow(
         h1("Input Results"), 
-        box()
+        box(tableOutput("simulationtable"))
         )
         )
    )
@@ -59,8 +59,18 @@ ui <- dashboardPage(
 #'-----*Server Defined*-----
 server <- function(input, output, session) {
   
-  # Numeric Input
-  
+  # Simulation Input
+  simdata = read.table(text="",
+                        col.names=c("Weeks", "Product", "Tier", "Result"),
+                        colClasses = c("integer", "character", "character", "integer") 
+  )
+  simulationtable <- reactiveValues()
+  simulationtable$df <- simdata
+  observe({
+    observeEvent(input$runsimulation, {
+      #Simulating 52 weeks, p1t1[price range], 1 sale per week, p1t1[probability of price range]
+      isolate(simresult <- Simulator(input$weeks, 20, input$salesperweek, 25))})
+  })
   
   # ui TextOuput - For Menu items and subitems
   output$res <- renderText({
@@ -78,10 +88,12 @@ server <- function(input, output, session) {
               ),
               # Simulation Parameter Names
               textInput(inputId = "simname", label = "Simulation Name"),
+              numericInput(inputId = "weeks", label = "Weeks", value = 0),
+              numericInput(inputId = "salesperweek", label = "Sales per Week", value = 0),
               selectInput(inputId = "productname", label = "Product Name", choices = product.table$ProductName),
               selectInput(inputId = "tiername", label = "Tier Name", choices = product.table$TierName),
               # Submit Results
-              submitButton(text = "Run Simulation")
+              actionButton(inputId = "runsimulation", label = "Run Simulation")
               ),
       menuItem("Result Filters", tabName = "resultsfilters", icon = icon("th"), startExpanded = FALSE,
                # Date Input
@@ -102,10 +114,8 @@ server <- function(input, output, session) {
   
 #-----Start output values-----
   #Output for Simulator Input
-  # output$simulationresults <- ({
-  #   input$simname <- ProductList(product.table, input$productname, input$tiername)
-  # })
-
+  output$simulationtable <- renderTable({simulationtable$df}, include.rownames=F)
+  
   #Create scatterplot object the plotOutput function is expecting
   output$scatterplot <- renderPlot({
     ggplot(data = dbresults, aes_string(x = input$x, y = input$y)) +
