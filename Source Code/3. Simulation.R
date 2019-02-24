@@ -13,7 +13,7 @@ s1t1 <- ProductList(product.table, "Service 1", "Tier 1")
 sim1 <- Simulator(52, p1t1[4], 1, p1t1[5])
 sim1
 sum(sim1)
-
+str(sim1)
 #Same Simulation for sim2
 sim2 <- Simulator(52, p1t2[4], 1, p1t2[5])
 sim2
