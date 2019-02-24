@@ -5,9 +5,6 @@ library(DT)
 library(shinydashboard)
 library(dplyr) #Use of dplyr package in ProductList function
 #-----Load local data-----
-load("./dbresults.Rdata")
-load("./product.table.RData")
-
 #-----Load custom functions-----
 source("./functions.R") #'Functions are in order: *Simulator*, *ProductList*, *return_tooltip*
 
@@ -69,7 +66,8 @@ server <- function(input, output, session) {
   observe({
     observeEvent(input$runsimulation, {
       #Simulating 52 weeks, p1t1[price range], 1 sale per week, p1t1[probability of price range]
-      isolate(simresult <- Simulator(input$weeks, 20, input$salesperweek, 25))})
+      print(prob25)
+      isolate(simresult <- Simulator(input$weeks, price, input$salesperweek, prob25))})
   })
   
   # ui TextOuput - For Menu items and subitems
