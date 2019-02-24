@@ -43,7 +43,7 @@ body <- dashboardBody(
         box(tableOutput("simulationtable")),
         box(htmlOutput("simresult")),
         box(renderTable("simresult")),
-        tableOutput("table")
+        tableOutput("simtable")
         )
         )
    )
@@ -78,7 +78,7 @@ server <- function(input, output, session) {
       eventReactive(input$runsimulation, {simresult <- Simulator(input$weeks, price, input$salesperweek, prob25)})
       isolate(simresult <- Simulator(input$weeks, price, input$salesperweek, prob25))
       print(simresult)
-      output$table <- renderTable({simresult}, include.rownames=F)
+      output$simtable <- renderTable({simresult}, include.rownames=F)
       renderTable(simresult)})
   })
   
