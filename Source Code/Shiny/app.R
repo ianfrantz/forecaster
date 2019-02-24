@@ -5,6 +5,11 @@ library(DT)
 library(shinydashboard)
 library(dplyr) #Use of dplyr package in ProductList function
 #-----Load local data-----
+load("./dbresults.Rdata")
+load("./product.table.RData")
+
+price <- p1t1[4]
+prob25 <- p1t1[5]
 #-----Load custom functions-----
 source("./functions.R") #'Functions are in order: *Simulator*, *ProductList*, *return_tooltip*
 
@@ -35,7 +40,10 @@ body <- dashboardBody(
      (tabName = "subitem2", h2("Create a Simulation"),
         fluidRow(
         h1("Input Results"), 
-        box(tableOutput("simulationtable"))
+        box(tableOutput("simulationtable")),
+        box(htmlOutput("simresult")),
+        box(renderTable("simresult")),
+        tableOutput("table")
         )
         )
    )
@@ -67,8 +75,14 @@ server <- function(input, output, session) {
     observeEvent(input$runsimulation, {
       #Simulating 52 weeks, p1t1[price range], 1 sale per week, p1t1[probability of price range]
       print(prob25)
-      isolate(simresult <- Simulator(input$weeks, price, input$salesperweek, prob25))})
+      eventReactive(input$runsimulation, {simresult <- Simulator(input$weeks, price, input$salesperweek, prob25)})
+      isolate(simresult <- Simulator(input$weeks, price, input$salesperweek, prob25))
+      print(simresult)
+      output$table <- renderTable({simresult}, include.rownames=F)
+      renderTable(simresult)})
   })
+  
+ 
   
   # ui TextOuput - For Menu items and subitems
   output$res <- renderText({
