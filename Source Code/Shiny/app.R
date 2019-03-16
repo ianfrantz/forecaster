@@ -8,8 +8,8 @@ library(dplyr) #Use of dplyr package in ProductList function
 load("./dbresults.Rdata")
 load("./product.table.RData")
 
-price <- p1t1[4]
-prob25 <- p1t1[5]
+#price <- p1t1[4]
+#prob25 <- p1t1[5]
 #-----Load custom functions-----
 source("./functions.R") #'Functions are in order: *Simulator*, *ProductList*, *return_tooltip*
 
