@@ -5,7 +5,7 @@ output:
   html_document:
     df_print: paged
   word_document: default
-date modified: December 1, 2018
+date modified: May 20, 2019
 ---
 
 # Forecaster
@@ -19,7 +19,7 @@ Component   | Release
 Database | V1.0
 Source Code | V1.0
 Shiny | Beta
-Docuemtation | V1.0
+Documentation | V1.0
 
 
 # Forecaster is a sampling distribution tool for hierarchical sales analysis.
@@ -37,9 +37,14 @@ Docuemtation | V1.0
 * SQLite 
   + forecaster.db
 * Source Code 
+  + forecaster.Rproj
   + 1. Read From SQLite.R
   + 2. Define Functions.R
   + 3. Simulation.R
+  + 4. Write Results to SQLite.R
+* Source Code \ Shiny
+  + app.R
+  + functions.R
   
 # Data is stored in lists for rapid iteration:
 
