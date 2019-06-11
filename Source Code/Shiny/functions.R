@@ -32,8 +32,9 @@ return_tooltip <- function(hover, point){
   left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
   top_px <- hover$range$top + top_pct * (hover$range$bottom - hover$range$top)
   
+  # style changes parts of the hover box
   style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); ",
-                  "left:", left_px + 2, "px; top:", top_px + 2, "px;")
+                  "left:", left_px + 100, "px; top:", top_px + 100, "px;")
   
   output_string <- ''
   
