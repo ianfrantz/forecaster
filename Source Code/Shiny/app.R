@@ -126,7 +126,8 @@ server <- function(input, output, session) {
     select(Date, SimulationNumber, Result)
   })
  
-  #Enable hover
+#'-----*Hover Defined*-----
+#Enable hover
   output$hover_info <- renderUI({
     hover <- input$plot_hover
     point <- nearPoints(df=dbresults, coordinfo=hover, 
